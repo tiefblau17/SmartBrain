@@ -39,6 +39,21 @@ const particleoptions = {
   }
 }
 
+const initailState={
+  input:'',
+  imageUrl:'',
+  box:{},
+  route:'signin',
+  isSignedIn: false,
+  user:{
+    id:'',
+    name:'',
+    email:'',
+    entries:0,
+    joined:''
+  }
+}
+
 class App extends Component {
   constructor(){
     super();
@@ -96,7 +111,7 @@ onButtonsubmit=()=>{
     .then(response =>{
       this.displayFaceBox(this.calculateFace(response))
       if(response){
-        fetch('http://localhost:3001/image',{
+        fetch('https://young-cove-83915.herokuapp.com/image',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({
@@ -106,6 +121,7 @@ onButtonsubmit=()=>{
           .then(count=>{
             this.setState(Object.assign(this.state.user,{entries:count}))
           })
+          .catch(console.log)
       }
       
     })
@@ -114,7 +130,7 @@ onButtonsubmit=()=>{
 
 onRouteChange=(route)=>{
   if(route==='signout'){
-    this.setState({isSignedIn:false})
+    this.setState(initailState)
   }
   else if(route==='home'){
     this.setState({isSignedIn:true})
